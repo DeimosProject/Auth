@@ -9,12 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
      * @var \Deimos\Auth\Auth $auth
      */
 
-    $password = $auth->domain()->provider('domainPassword');
+    $password = $auth->domain(isset($_GET['domain']) ? $_GET['domain'] : 'default')->provider('domainPassword');
     $password->login($_POST['login'], $_POST['password']);
 
     $provider = isset($_POST['withCookie']) ? 'domainCookie' : 'domainSession';
 
-    $auth->domain()->provider($provider)->persist();
+    $auth->domain(isset($_GET['domain']) ? $_GET['domain'] : 'default')->provider($provider)->persist();
 
     header('location: ./');
     die;

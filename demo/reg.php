@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
      * @var \Deimos\Auth\Auth $auth
      */
 
-    $password = $auth->domain()->provider('domainPassword');
+    $password = $auth->domain(isset($_GET['domain']) ? $_GET['domain'] : 'default')->provider('domainPassword');
 
     $orm->create('user', [
         'email'    => $_POST['login'] . '@deimos',
