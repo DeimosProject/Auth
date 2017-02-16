@@ -17,6 +17,11 @@ class Provider
     protected $auth;
 
     /**
+     * @var bool
+     */
+    protected $try;
+
+    /**
      * @var Entity
      */
     protected $user;
@@ -112,12 +117,17 @@ class Provider
      */
     public function user()
     {
-        if (!$this->user)
+        if (!$this->try && !$this->user)
         {
             foreach ($this->config as $name => $class)
             {
-                $this->provider($name)->execute();
+                if ($this->provider($name)->execute())
+                {
+                    break;
+                }
             }
+
+            $this->try = true;
         }
 
         return $this->user;

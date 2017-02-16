@@ -62,7 +62,7 @@ class Cookie extends Type
 
         if (!$series)
         {
-            return;
+            return null;
         }
 
         $model = $this->config->getRequired('tokens.model');
@@ -93,7 +93,11 @@ class Cookie extends Type
             {
                 $this->provider->setUser($user);
             }
+
+            return $user;
         }
+
+        return null;
     }
 
     public function forget()
@@ -104,11 +108,15 @@ class Cookie extends Type
 
         $model = $this->config->getRequired('tokens.model');
 
-        $this->provider->auth()->orm()->repository($model)
+        $user = $this->provider->auth()->orm()->repository($model)
             ->where('series', $series)
             ->where('expires', '>=', time())
-            ->findOne()
-            ->delete();
+            ->findOne();
+
+        if ($user)
+        {
+            $user->delete();
+        }
 
         parent::forget();
     }

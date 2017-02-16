@@ -11,7 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     $password = $auth->domain()->provider('domainPassword');
     $password->login($_POST['login'], $_POST['password']);
-    $auth->domain()->provider('domainCookie')->persist();
+
+    $provider = isset($_POST['withCookie']) ? 'domainCookie' : 'domainSession';
+
+    $auth->domain()->provider($provider)->persist();
 
     header('location: ./');
     die;
@@ -23,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     auth
     <input type="text" name="login"/>
     <input type="password" name="password"/>
+
+    <input type="checkbox" name="withCookie">
 
     <button type="submit">send</button>
 </form>

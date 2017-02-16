@@ -59,6 +59,8 @@ class Session extends Type
         {
             $this->provider->setUser($user);
         }
+
+        return $user;
     }
 
     public function forget()
