@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $password = $auth->domain()->provider('domainPassword');
     $password->login($_POST['login'], $_POST['password']);
     $auth->domain()->provider('domainCookie')->persist();
+
+    header('location: ./');
     die;
 }
 

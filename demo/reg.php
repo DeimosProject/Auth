@@ -17,6 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         'password' => $password->hash($_POST['password'])
     ]);
 
+    header('location: ./');
+    die;
+
 }
 
 ?>

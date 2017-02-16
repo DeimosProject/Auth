@@ -100,7 +100,7 @@ class Provider
      *
      * @return static
      */
-    public function setUser(Entity $entity)
+    public function setUser($entity)
     {
         $this->user = $entity;
 
