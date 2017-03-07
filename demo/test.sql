@@ -58,3 +58,8 @@ ALTER TABLE `tokens`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `tokens`
+CHANGE `id` `id` int(11) NOT NULL AUTO_INCREMENT FIRST;
+ALTER TABLE `users`
+CHANGE `id` `id` int(11) NOT NULL AUTO_INCREMENT FIRST;
