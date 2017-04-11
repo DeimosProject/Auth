@@ -8,6 +8,7 @@ use Deimos\Cookie\Cookie;
 use Deimos\Helper\Helper;
 use Deimos\ORM\ORM;
 use Deimos\Session\Session;
+use Deimos\Slice\Slice;
 
 class Auth
 {
@@ -48,20 +49,20 @@ class Auth
     protected $domains = [];
 
     /**
-     * @var ConfigObject
+     * @var Slice
      */
-    protected $config;
+    protected $slice;
 
     /**
      * Auth constructor.
      *
      * @param $orm    ORM
-     * @param $config ConfigObject
+     * @param $slice  Slice
      */
-    public function __construct(ORM $orm, ConfigObject $config)
+    public function __construct(ORM $orm, Slice $slice)
     {
-        $this->orm    = $orm;
-        $this->config = $config;
+        $this->orm   = $orm;
+        $this->slice = $slice;
     }
 
     /**
@@ -73,7 +74,7 @@ class Auth
     {
         if (!isset($this->domains[$name]))
         {
-            $slice = $this->config->slice($name);
+            $slice = $this->slice->getSlice($name);
             $class = $this->provider;
 
             $this->domains[$name] = new $class($this, $slice, $name);

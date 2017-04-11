@@ -61,17 +61,17 @@ $config = [
 
 ];
 
-$builder = new Deimos\Builder\Builder();
+$helper = new Deimos\Helper\Helper();
 
-$dbConfig = new \Deimos\Config\ConfigObject($builder, [
+$dbConfig = new \Deimos\Slice\Slice($helper, [
     'adapter'  => 'mysql',
-    'database' => 'test',
+    'database' => 'auth',
     'username' => 'root',
     'password' => 'root'
 ]);
 
 $database = new \Deimos\Database\Database($dbConfig);
-$orm      = new \Deimos\ORM\ORM($builder, $database);
+$orm      = new \Deimos\ORM\ORM($helper, $database);
 
-$authConfig = new \Deimos\Config\ConfigObject($builder, $config);
+$authConfig = new \Deimos\Slice\Slice($helper, $config);
 $auth       = new \Deimos\Auth\Auth($orm, $authConfig);

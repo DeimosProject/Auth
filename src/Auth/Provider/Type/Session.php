@@ -44,10 +44,10 @@ class Session extends Type
             return;
         }
 
-        $persist  = $this->config->getRequired('persist');
+        $persist  = $this->slice->getRequired('persist');
         $provider = $this->provider->provider($persist);
 
-        $model = $provider->config->get('model');
+        $model = $provider->slice->getData('model');
 
         $orm = $this->provider->auth()->orm();
 

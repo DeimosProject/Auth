@@ -15,7 +15,7 @@
     }
   ],
   "require": {
-    "deimos/orm": "~2.0",
+    "deimos/orm": "~3.0",
     "deimos/session": "~1.0",
     "deimos/cookie": "~1.0"
   },

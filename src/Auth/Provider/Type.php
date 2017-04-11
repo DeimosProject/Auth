@@ -2,7 +2,7 @@
 
 namespace Deimos\Auth\Provider;
 
-use Deimos\Config\ConfigObject;
+use Deimos\Slice\Slice;
 
 abstract class Type implements TypeInterface
 {
@@ -13,20 +13,20 @@ abstract class Type implements TypeInterface
     protected $provider;
 
     /**
-     * @var \Deimos\Config\ConfigObject
+     * @var Slice
      */
-    protected $config;
+    protected $slice;
 
     /**
      * Type constructor.
      *
-     * @param Provider     $provider
-     * @param ConfigObject $config
+     * @param Provider $provider
+     * @param Slice    $config
      */
-    public function __construct(Provider $provider, ConfigObject $config)
+    public function __construct(Provider $provider, Slice $config)
     {
         $this->provider = $provider;
-        $this->config   = $config;
+        $this->slice    = $config;
     }
 
     public function forget()

@@ -21,7 +21,7 @@ class Password extends Type
         if (!$this->options)
         {
             $this->options = [
-                'cost' => $this->config->get('options.cost', 12),
+                'cost' => $this->slice->getData('options.cost', 12),
             ];
         }
 
@@ -67,9 +67,9 @@ class Password extends Type
      */
     public function login($username, $password)
     {
-        $model       = $this->config->getRequired('model');
-        $loginFields = $this->config->getRequired('loginFields');
-        $hashField   = $this->config->getRequired('hashField');
+        $model       = $this->slice->getRequired('model');
+        $loginFields = $this->slice->getRequired('loginFields');
+        $hashField   = $this->slice->getRequired('hashField');
 
         $userQuery = $this->provider->auth()->orm()->repository($model);
 

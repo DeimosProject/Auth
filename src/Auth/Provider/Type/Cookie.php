@@ -27,11 +27,11 @@ class Cookie extends Type
         if ($user)
         {
             $series  = $this->provider->auth()->helper()->str()->random();
-            $expires = $this->config->get('tokens.expires', 3600 * 24 * 14);
+            $expires = $this->slice->getData('tokens.expires', 3600 * 24 * 14);
 
             $orm = $this->provider->auth()->orm();
 
-            $model = $this->config->getRequired('tokens.model');
+            $model = $this->slice->getRequired('tokens.model');
 
             $token = $orm->create($model);
             $save  = $token->save([
@@ -65,7 +65,7 @@ class Cookie extends Type
             return null;
         }
 
-        $model = $this->config->getRequired('tokens.model');
+        $model = $this->slice->getRequired('tokens.model');
 
         $orm = $this->provider->auth()->orm();
 
@@ -78,10 +78,10 @@ class Cookie extends Type
         {
             $userId = $token->userId;
 
-            $persist  = $this->config->getRequired('persist');
+            $persist  = $this->slice->getRequired('persist');
             $provider = $this->provider->provider($persist);
 
-            $model = $provider->config->get('model');
+            $model = $provider->slice->getData('model');
 
             $orm = $this->provider->auth()->orm();
 
@@ -106,7 +106,7 @@ class Cookie extends Type
         $series = $cookie->get($this->getKey());
         $cookie->remove($this->getKey());
 
-        $model = $this->config->getRequired('tokens.model');
+        $model = $this->slice->getRequired('tokens.model');
 
         $user = $this->provider->auth()->orm()->repository($model)
             ->where('series', $series)

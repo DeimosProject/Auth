@@ -7,6 +7,7 @@ use Deimos\Config\ConfigObject;
 use Deimos\Cookie\Cookie;
 use Deimos\ORM\Entity;
 use Deimos\Session\Session;
+use Deimos\Slice\Slice;
 
 class Provider
 {
@@ -27,9 +28,9 @@ class Provider
     protected $user;
 
     /**
-     * @var ConfigObject
+     * @var Slice
      */
-    protected $config;
+    protected $slice;
 
     /**
      * @var Cookie
@@ -58,15 +59,15 @@ class Provider
     /**
      * Provider constructor.
      *
-     * @param Auth         $auth
-     * @param ConfigObject $config
-     * @param string       $name
+     * @param Auth   $auth
+     * @param Slice  $slice
+     * @param string $name
      */
-    public function __construct(Auth $auth, ConfigObject $config, $name)
+    public function __construct(Auth $auth, Slice $slice, $name)
     {
-        $this->auth   = $auth;
-        $this->config = $config;
-        $this->name   = $name;
+        $this->auth  = $auth;
+        $this->slice = $slice;
+        $this->name  = $name;
     }
 
     /**
@@ -92,7 +93,7 @@ class Provider
      */
     public function provider($name)
     {
-        $slice = $this->config->slice($name);
+        $slice = $this->slice->getSlice($name);
 
         $type  = $slice->getRequired('type');
         $class = $this->mapClasses[$type];
@@ -119,7 +120,7 @@ class Provider
     {
         if (!$this->try && !$this->user)
         {
-            foreach ($this->config as $name => $class)
+            foreach ($this->slice as $name => $class)
             {
                 if ($this->provider($name)->execute())
                 {
@@ -135,7 +136,7 @@ class Provider
 
     public function forgetUser()
     {
-        foreach ($this->config as $name => $class)
+        foreach ($this->slice as $name => $class)
         {
             $this->provider($name)->forget();
         }
